@@ -1,17 +1,20 @@
-from selenium.webdriver import Firefox
+from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
 
 url = 'http://www.portalredevw.com.br/'
 
 login = 'test'
 password = '1234'
 
-browser = Firefox()
+options = Options()
+options.page_load_strategy = 'normal'
 
+browser = webdriver.Firefox(options=options)
 browser.get(url)
 
-sleep(1)
+# sleep(1)
 
 frame_1 = browser.find_element_by_xpath('/html/frameset/frame[1]')
 browser.switch_to.frame(frame_1)
@@ -60,9 +63,15 @@ linkVolkswagen.click()
 
 window_after = browser.window_handles[1] #armazenar identificador da nova janela
 
+sleep(10)
+
 browser.switch_to.window(window_after) #mudando de janela
 
-
+# Cria e escreve no arquivo txt
+# body = browser.find_element_by_tag_name('body')
+# file_text = open('texto_vw_com_br.txt', 'w')
+# file_text.writelines(body.text)
+# file_text.close()
 
 
 
