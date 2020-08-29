@@ -7,7 +7,6 @@ import pdfkit
 
 from PIL import Image
 
-
 url = 'http://www.portalredevw.com.br/'
 
 login = 'test'
@@ -18,7 +17,6 @@ options.page_load_strategy = 'normal'
 
 browser = webdriver.Firefox(options=options)
 browser.get(url)
-
 
 frame_1 = browser.find_element_by_xpath('/html/frameset/frame[1]')
 browser.switch_to.frame(frame_1)
@@ -62,8 +60,8 @@ browser.switch_to.frame(frame_6)
 
 window_before = browser.window_handles[0] #armazenar identificador da janela
 
-linkVolkswagen = browser.find_element_by_xpath('//*[@id="form1"]/table/tbody/tr[2]/td/table/tbody/tr[3]/td/table/tbody/tr/td[2]/a[1]')
-linkVolkswagen.click()
+link_volkswagen = browser.find_element_by_xpath('//*[@id="form1"]/table/tbody/tr[2]/td/table/tbody/tr[3]/td/table/tbody/tr/td[2]/a[1]')
+link_volkswagen.click()
 
 window_after = browser.window_handles[1] #armazenar identificador da nova janela
 
@@ -95,13 +93,13 @@ sleep(1)
 browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 
 sleep(3)
-el = browser.find_element_by_tag_name('body') 
-el.screenshot('scrape.png') #salva a página como png
+page = browser.find_element_by_tag_name('body') 
+page.screenshot('scrape.png') #salva a página como png
 
 sleep(1)
-image1 = Image.open(r'scrape.png')
-im1 = image1.convert('RGB')
-im1.save(r'pdf_vw_com_br.pdf') #converte a imagem em pdf
+print_page = Image.open(r'scrape.png')
+pdf = print_page.convert('RGB')
+pdf.save(r'pdf_vw_com_br.pdf') #converte a imagem em pdf
 
 
 browser.quit()
