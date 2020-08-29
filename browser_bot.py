@@ -82,10 +82,9 @@ sleep(5)
 # Salva a página em pdf
 
 # pdfkit.from_url (browser.current_url, 'pdf_vw_com_br.pdf') salvou sem imagens
-
 # browser.execute_script('window.print()') abriu a janela de imprimir do sistema
 
-browser.execute_script("window.scrollTo(0,document.body.scrollHeight * 0.2)")
+browser.execute_script("window.scrollTo(0,document.body.scrollHeight * 0.2)") #scroll para carregar as imagens
 sleep(1)
 browser.execute_script("window.scrollTo(0,document.body.scrollHeight * 0.4)")
 sleep(1)
@@ -94,19 +93,16 @@ sleep(1)
 browser.execute_script("window.scrollTo(0,document.body.scrollHeight * 0.8)")
 sleep(1)
 browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+
 sleep(3)
 el = browser.find_element_by_tag_name('body') 
-el.screenshot('scrape.png') 
+el.screenshot('scrape.png') #salva a página como png
 
 sleep(1)
-
 image1 = Image.open(r'scrape.png')
 im1 = image1.convert('RGB')
-im1.save(r'pdf_vw_com_br.pdf')
-
+im1.save(r'pdf_vw_com_br.pdf') #converte a imagem em pdf
 
 
 browser.quit()
-
-
  
