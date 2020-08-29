@@ -3,6 +3,11 @@ from time import sleep
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
 
+import pdfkit
+
+from PIL import Image
+
+
 url = 'http://www.portalredevw.com.br/'
 
 login = 'test'
@@ -14,7 +19,6 @@ options.page_load_strategy = 'normal'
 browser = webdriver.Firefox(options=options)
 browser.get(url)
 
-# sleep(1)
 
 frame_1 = browser.find_element_by_xpath('/html/frameset/frame[1]')
 browser.switch_to.frame(frame_1)
@@ -68,14 +72,41 @@ sleep(10)
 browser.switch_to.window(window_after) #mudando de janela
 
 # Cria e escreve no arquivo txt
-# body = browser.find_element_by_tag_name('body')
-# file_text = open('texto_vw_com_br.txt', 'w')
-# file_text.writelines(body.text)
-# file_text.close()
+body = browser.find_element_by_tag_name('body')
+file_text = open('texto_vw_com_br.txt', 'w')
+file_text.writelines(body.text)
+file_text.close()
+
+sleep(5) 
+
+# Salva a página em pdf
+
+# pdfkit.from_url (browser.current_url, 'pdf_vw_com_br.pdf') salvou sem imagens
+
+# browser.execute_script('window.print()') abriu a janela de imprimir do sistema
+
+browser.execute_script("window.scrollTo(0,document.body.scrollHeight * 0.2)")
+sleep(1)
+browser.execute_script("window.scrollTo(0,document.body.scrollHeight * 0.4)")
+sleep(1)
+browser.execute_script("window.scrollTo(0,document.body.scrollHeight * 0.6)")
+sleep(1)
+browser.execute_script("window.scrollTo(0,document.body.scrollHeight * 0.8)")
+sleep(1)
+browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+sleep(3)
+el = browser.find_element_by_tag_name('body') 
+el.screenshot('scrape.png') 
+
+sleep(1)
+
+image1 = Image.open(r'scrape.png')
+im1 = image1.convert('RGB')
+im1.save(r'pdf_vw_com_br.pdf')
 
 
 
+browser.quit()
 
-# element.close()
 
-# browser.quit()
+ 
