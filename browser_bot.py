@@ -3,9 +3,9 @@ from time import sleep
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
 
-import pdfkit
-
 from PIL import Image
+from bs4 import BeautifulSoup
+import requests
 
 url = 'http://www.portalredevw.com.br/'
 
@@ -70,12 +70,12 @@ sleep(10)
 browser.switch_to.window(window_after) #mudando de janela
 
 # Cria e escreve no arquivo txt
-body = browser.find_element_by_tag_name('body')
-file_text = open('texto_vw_com_br.txt', 'w')
-file_text.writelines(body.text)
-file_text.close()
+# body = browser.find_element_by_tag_name('body')
+# file_text = open('texto_vw_com_br.txt', 'w')
+# file_text.writelines(body.text)
+# file_text.close()
 
-sleep(5) 
+# sleep(5) 
 
 # Salva a página em pdf
 
@@ -96,10 +96,19 @@ sleep(3)
 page = browser.find_element_by_tag_name('body') 
 page.screenshot('scrape.png') #salva a página como png
 
-sleep(1)
-print_page = Image.open(r'scrape.png')
-pdf = print_page.convert('RGB')
-pdf.save(r'pdf_vw_com_br.pdf') #converte a imagem em pdf
+# sleep(1)
+# print_page = Image.open(r'scrape.png')
+# pdf = print_page.convert('RGB')
+# pdf.save(r'pdf_vw_com_br.pdf') #converte a imagem em pdf
+
+# Pegando todos os links do site
+req = requests.get(browser.current_url)
+soup = BeautifulSoup(req.content, 'html.parser')
+for link in soup.find_all('a'): 
+    print(link.get('href'))
+
+# Pandas
+
 
 
 browser.quit()
